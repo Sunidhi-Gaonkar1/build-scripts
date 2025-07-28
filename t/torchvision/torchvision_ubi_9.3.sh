@@ -140,7 +140,7 @@ export CXX_COMPILER=$(which g++)
 echo "----------------protobuf installing-------------------"
 git clone https://github.com/protocolbuffers/protobuf
 cd protobuf
-git checkout v4.25.3
+git checkout v4.25.8
 
 LIBPROTO_DIR=$(pwd)
 mkdir -p $LIBPROTO_DIR/local/libprotobuf
@@ -261,6 +261,9 @@ python3.12 -m pip install -r requirements.txt
 
 echo "----------Installing pytorch------------"
 MAX_JOBS=$(nproc) python3.12 setup.py install
+python3.12 setup.py develop
+python3.12 setup.py bdist_wheel
+cp dist/*.whl /
 cd $CURRENT_DIR
 
 echo "--------------------------------- Installing Opus ---------------------------------"
@@ -568,6 +571,16 @@ fi
 
 cd $CURRENT_DIR
 
+cd vision
+sed -i '8s/ON/OFF/' CMakeLists.txt && sed -i '9s/ON/OFF/' CMakeLists.txt
+cd build
+export CMAKE_PREFIX_PATH=/usr/local/lib64/python3.12/site-packages/torch/share/cmake/Torch:$LIBPROTO_INSTALL
+cmake ..
+make install
+cp libtorchvision.so /usr/local/lib64/python3.12/site-packages/torch/share/cmake/Torch
+cp libtorchvision.so /usr/local/lib64
+
+cd $CURRENT_DIR
 python3.12 -m pip install ./torchvision*.whl
 
 python3.12 -m pip install pytest pytest-xdist
