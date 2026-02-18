@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 #
 # Package         : OpenBLAS
-# Version         : v0.3.29
+# Version         : v0.3.30
 # Source repo     : https://github.com/OpenMathLib/OpenBLAS
 # Tested on       : UBI: 9.3
 # Language        : C
@@ -22,7 +22,7 @@ set -ex
 
 # Variables
 PACKAGE_NAME=OpenBLAS
-PACKAGE_VERSION=${1:-v0.3.29}
+PACKAGE_VERSION=${1:-v0.3.30}
 PACKAGE_URL=https://github.com/OpenMathLib/OpenBLAS
 OPENBLAS_VERSION=${PACKAGE_VERSION}
 CURRENT_DIR=$(pwd)
